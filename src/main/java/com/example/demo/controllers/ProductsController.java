@@ -6,6 +6,7 @@ import com.example.demo.services.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class ProductsController {
     }
 
     @GetMapping("/add")
+    @Secured(value = "ROLE_ADMIN")
     public String showAddProductForm(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
@@ -58,6 +60,7 @@ public class ProductsController {
     }
 
     @GetMapping("/edit/{id}")
+    @Secured(value = "ROLE_ADMIN")
     public String showAEditProductForm(Model model, @PathVariable(value = "id") Long id) {
         Product product = productsService.getById(id);
         model.addAttribute("product", product);
@@ -65,6 +68,7 @@ public class ProductsController {
     }
 
     @PostMapping("/edit")
+    @Secured(value = "ROLE_ADMIN")
     public String addProduct(@ModelAttribute(value = "product") Product product) {
         productsService.saveOrUpdate(product);
         return "redirect:/products";
