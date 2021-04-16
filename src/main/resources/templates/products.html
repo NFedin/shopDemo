@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/extras/spring-security" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <title>Каталог товаров</title>
@@ -10,6 +10,21 @@
 
 <body>
 <div class="container">
+    <li sec:authorize="isAnonymous()" class="nav-item">
+        <form class="align-middle" th:action="@{/authenticateTheUser}" method="POST">
+            <div class="input-group-prepend">
+                <input class="form-control" type="text" placeholder="Логин" name="username"
+                       aria-describedby="inputGroup-sizing-sm">
+                <input class="form-control" type="text" placeholder="Пароль" name="password"
+                       aria-describedby="inputGroup-sizing-sm">
+                <button class="btn btn-secondary btn-sm" type="submit">Войти</button>
+            </div>
+        </form>
+    </li>
+    <li sec:authorize="isAuthenticated()" class="nav-item">
+        <h2 th:text="'Пользователь: ' + ${username}"/>
+    </li>
+
     <h3>Фильтр</h3>
     <form th:action="@{/products}" method="get" class="form-horizontal">
 
@@ -56,13 +71,15 @@
     </table>
     <span th:text="${'Всего товаров ' + products.size()}"/>
     <br>
-    <a th:href="@{/products/add}">Добавить товар</a>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/products/add}">Добавить товар</a>
     <br>
     <a th:href="@{/products/?page=1}">1</a>
     <a th:href="@{/products/?page=2}">2</a>
     <a th:href="@{/products/?page=3}">3</a>
     <a th:href="@{/products/?page=4}">4</a>
     <a th:href="@{/products/?page=5}">5</a>
+    <br>
+    <span th:text="${'Top3 Products: ' + top3List}"/>
 </div>
 
 </body>

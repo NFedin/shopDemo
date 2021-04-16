@@ -23,9 +23,11 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-    public Product(Long id, String title, BigDecimal price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
+    @Column(name = "views")
+    private int views;
+
+    @Override
+    public String toString() {
+        return String.format("Product [ id: %d title: %s price: %s views: %d ]", id, title, price.toString(), views);
     }
 }

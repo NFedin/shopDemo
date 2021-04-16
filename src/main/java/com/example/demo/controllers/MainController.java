@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.*;
 //@RequestMapping("/main")
 public class MainController {
 
+    @GetMapping("/login")
+    public String loginForm() {
+        return "login";
+    }
+
     @GetMapping("/index")
     public String doSomething() {
         return  "index";
