@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long>, JpaSpecificationExecutor<Product> {
     @Query("SELECT p FROM Product p ORDER BY views DESC")
-    public List<Product> getTop3Products();
+    List<Product> getTop3Products();
 
 }
